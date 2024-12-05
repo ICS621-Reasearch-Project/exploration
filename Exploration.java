@@ -70,7 +70,8 @@ public class Exploration {
 
     public static void main(String[] args) {
 
-        Exploration exploration = new Exploration(20); // Choose how large tree is
+        Exploration exploration = new Exploration(1000); // Choose how large tree is
         exploration.runExploration();
+
     }
 }

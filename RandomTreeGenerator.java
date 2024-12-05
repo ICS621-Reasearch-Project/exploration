@@ -27,6 +27,7 @@ class RandomTreeGenerator {
 
     static class RandomTree {
         private final Map<String, Node> nodes;
+        private Node rootNode;
         private Node goalNode;
 
         public RandomTree() {
@@ -52,6 +53,9 @@ class RandomTreeGenerator {
                 child.edges.add(new Edge(parent, weight));  // Undirected edge
             }
 
+            // Randomly set one node as the root
+            rootNode = nodeList.get(random.nextInt(nodeList.size()));
+
             // Randomly set one node as the goal
             goalNode = nodeList.get(random.nextInt(nodeList.size()));
             goalNode.isGoal = true;
@@ -73,7 +77,17 @@ class RandomTreeGenerator {
         }
 
         public Node getRoot() {
-            return nodes.values().iterator().next();  // Return any node as root
+            return rootNode;
+        }
+
+        // Get all nodes in tree instance
+        public Collection<Node> getAllNodes() {
+            return nodes.values();
+        }
+
+        // Extract individual node
+        public Node getNodeById(String nodeId) {
+            return nodes.get(nodeId);
         }
 
         // To visualize path to goal
