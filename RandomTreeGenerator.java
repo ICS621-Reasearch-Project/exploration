@@ -75,5 +75,44 @@ class RandomTreeGenerator {
         public Node getRoot() {
             return nodes.values().iterator().next();  // Return any node as root
         }
+
+        // To visualize path to goal
+        public List<String> findPathToGoal() {
+            Node root = getRoot();
+            List<String> path = new ArrayList<>();
+            Set<Node> visited = new HashSet<>();
+            if (dfs(root, goalNode, path, visited)) {
+                return path;
+            } else {
+                System.out.println("Goal not reachable from root.");
+                return Collections.emptyList();
+            }
+        }
+
+        // DFS to find optimal path
+        private boolean dfs(Node current, Node goal, List<String> path, Set<Node> visited) {
+            if (current == null || visited.contains(current)) {
+                return false;
+            }
+
+            visited.add(current);
+            path.add(current.id);
+
+            // Goal found
+            if (current == goal) {
+                return true;
+            }
+
+            // Explore the neighbors
+            for (Edge edge : current.edges) {
+                if (dfs(edge.targetNode, goal, path, visited)) {
+                    return true;
+                }
+            }
+
+            // Backtrack if the goal isn't found along this path
+            path.remove(path.size() - 1);
+            return false;
+        }
     }
 }

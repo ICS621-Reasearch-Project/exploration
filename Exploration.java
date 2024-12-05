@@ -13,6 +13,13 @@ public class Exploration {
         // Extract root and goal information
         root = tree.getRoot();
         goal = tree.getGoalNode();
+
+        List<String> path = tree.findPathToGoal();
+        if (!path.isEmpty()) {
+            System.out.println("Path from root to goal: " + String.join(" -> ", path));
+        } else {
+            System.out.println("No path found from root to goal.");
+        }
     }
 
     public void runExploration() {
