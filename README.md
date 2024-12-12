@@ -34,10 +34,3 @@
 **Linux:**
 * **Terminal:** Use the commands mentioned above in the terminal.
 - **IDE:** Use the built-in run/debug configurations in your IDE.
-
-### Additional Tips:
-* **Build Tools:** Consider using build tools like Maven or Gradle to automate the build and dependency management processes.
-* **IDE Integration:** Utilize the powerful features of IDEs to streamline code editing, compilation, debugging, and testing.
-* **Code Organization:** Keep your code well-organized and commented to improve readability and maintainability.
-
-By following these steps and leveraging the power of Java development tools, you can effectively run your Java code on various operating systems.
