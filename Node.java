@@ -13,6 +13,6 @@ class Node {
 
     @Override
     public String toString() {
-        return "Node" + id + "(f(x)=" + prediction + ")";
+        return "Node" + id;
     }
 }
