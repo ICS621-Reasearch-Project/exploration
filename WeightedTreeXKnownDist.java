@@ -1,23 +1,19 @@
 import java.util.*;
 
-class Node {
-    int id;
-    Map<Node, Integer> children = new HashMap<>(); // Child to weight mapping
-    int prediction = -1; // f(x) value
-    boolean isPredictionCorrect = true;
-
-    Node(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Node" + id + "(f(x)=" + prediction + ")";
-    }
-}
-
 public class WeightedTreeXKnownDist {
-    static Random random = new Random();
+    private static Random random = new Random();
+
+    static class Path {
+        Node node;
+        int cost;
+        List<Node> path;
+
+        Path(Node node, int cost, List<Node> path) {
+            this.node = node;
+            this.cost = cost;
+            this.path = path;
+        }
+    }
 
     public static Node generateRandomTree(int numNodes, int maxWeight) {
         List<Node> nodes = new ArrayList<>();
@@ -37,13 +33,13 @@ public class WeightedTreeXKnownDist {
         return nodes.get(0); // Return root node
     }
 
-    public static List<Node> WeightedTreeXKnownDist(Node root, Node goal, int budget) {
+    public static List<Node> findPathWithinBudget(Node root, Node goal, int budget) {
         Map<Node, Integer> visitedCosts = new HashMap<>();
-        Queue<Path> queue = new LinkedList<>();
-        queue.add(new Path(root, 0, new ArrayList<>()));
+        Queue<WeightedTreeXKnownDist.Path> queue = new LinkedList<>();
+        queue.add(new WeightedTreeXKnownDist.Path(root, 0, new ArrayList<>()));
 
         while (!queue.isEmpty()) {
-            Path currentPath = queue.poll();
+            WeightedTreeXKnownDist.Path currentPath = queue.poll();
             Node currentNode = currentPath.node;
             int currentCost = currentPath.cost;
 
@@ -71,7 +67,7 @@ public class WeightedTreeXKnownDist {
                 if (currentCost + edgeWeight <= budget) {
                     List<Node> newPath = new ArrayList<>(currentPath.path);
                     newPath.add(currentNode);
-                    queue.add(new Path(child, currentCost + edgeWeight, newPath));
+                    queue.add(new WeightedTreeXKnownDist.Path(child, currentCost + edgeWeight, newPath));
                 }
             }
         }
@@ -80,42 +76,7 @@ public class WeightedTreeXKnownDist {
         return null;
     }
 
-    static class Path {
-        Node node;
-        int cost;
-        List<Node> path;
-
-        Path(Node node, int cost, List<Node> path) {
-            this.node = node;
-            this.cost = cost;
-            this.path = path;
-        }
-    }
-
-    public static void main(String[] args) {
-        int numNodes = 100;
-        int maxWeight = 10;
-        int budget = 150; //Test budget by changing here
-
-        Node root = generateRandomTree(numNodes, maxWeight);
-        Node goal = findGoalNode(root);
-
-        System.out.println("Tree Structure:");
-        printTree(root, 0);
-
-        System.out.println("\nFinding path from root to goal within budget:");
-        List<Node> path = WeightedTreeXKnownDist(root, goal, budget);
-
-        if (path != null) {
-            System.out.println("Path found within budget:");
-            path.forEach(node -> System.out.print(node.id + " -> "));
-            System.out.println("Goal");
-        } else {
-            System.out.println("No path found within the budget.");
-        }
-    }
-
-    private static Node findGoalNode(Node root) {
+    public static Node findGoalNode(Node root) {
 
         Queue<Node> queue = new LinkedList<>();
         queue.add(root);
@@ -131,7 +92,7 @@ public class WeightedTreeXKnownDist {
         return root;
     }
 
-    private static void printTree(Node node, int level) {
+    public static void printTree(Node node, int level) {
         if (node == null) return;
         System.out.println("  ".repeat(level) + node);
         for (Node child : node.children.keySet()) {
