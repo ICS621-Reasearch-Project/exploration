@@ -2,25 +2,30 @@ import java.util.*;
 
 public class Exploration {
     public static void main(String[] args) {
-        int numNodes = 100;
-        int maxWeight = 10;
-        int budget = 150;
+        int numNodes = 10;       // Number of nodes in the tree
+        int maxWeight = 5;       // Maximum edge weight
+        int budget = 10;         // Travel budget
 
-        Node root = WeightedTreeXKnownDist.generateRandomTree(numNodes, maxWeight);
-        Node goal = WeightedTreeXKnownDist.findGoalNode(root);
+        // Generate the tree
+        WeightedTreeXKnownDist.Node root = WeightedTreeXKnownDist.generateRandomTree(numNodes, maxWeight);
 
+        // Identify goal node
+        WeightedTreeXKnownDist.Node goal = WeightedTreeXKnownDist.findGoalNode(root);
+        System.out.println("Goal node is: " + goal);
+
+        // Print the tree structure for visualization
         System.out.println("Tree Structure:");
         WeightedTreeXKnownDist.printTree(root, 0);
 
+        // Find path within budget
         System.out.println("\nFinding path from root to goal within budget:");
-        List<Node> path = WeightedTreeXKnownDist.findPathWithinBudget(root, goal, budget);
+        List<WeightedTreeXKnownDist.Node> path = WeightedTreeXKnownDist.findPathWithinBudget(root, goal, budget);
 
         if (path != null) {
             System.out.println("Path found within budget:");
-            path.forEach(node -> System.out.print(node.id + " -> "));
-            System.out.println("Goal");
+            System.out.println(path);
         } else {
-            System.out.println("No path found within the budget.");
+            System.out.println("Cannot travel to goal within budget.");
         }
     }
 }
