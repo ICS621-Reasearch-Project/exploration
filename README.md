@@ -22,7 +22,7 @@
 - This will run the `main` method in the `TreeExplorationTest` class, initiating the tree generation, pathfinding, and result printing.
 ### Steps to Run WeightedTreeX:
 **1. Set Up the Project Structure:**
-* Create separate `.java` files for each class: `Node.java` and `WeightedTreeX.java`.
+* Create separate `.java` files for each class: `Node.java`, `NodeWrapper.java`, and `WeightedTreeX.java`.
 * Organize these files into a suitable directory structure.
 
 **2. Compile the Code:**
